@@ -1,0 +1,53 @@
+# LAB 3
+
+## Part 1 - Bugs
+Choose one of the bugs from week 4’s lab.
+
+Provide:
+
+A failure-inducing input for the buggy program, as a JUnit test and any associated code:
+```
+@Test
+    public void testReverseInPlaceBug() {
+        int[] input = { 1, 2, 3, 4, 5 };
+        ArrayExamples.reverseInPlace(input);
+        assertArrayEquals(new int[]{ 5, 4, 3, 2, 1 }, input); // This test should pass but fails due to the bug
+    }
+```
+
+An input that doesn’t induce a failure, as a JUnit test and any associated code:
+```
+@Test
+    public void testReverseInPlaceShouldPass() {
+        int[] input = {1, 2, 3, 4, 5};
+        ArrayExamples.reverseInPlace(input);
+        assertArrayEquals(new int[]{5, 4, 3, 2, 1}, input);
+```
+
+The symptom, as the output of running the tests (provide it as a screenshot of running JUnit with at least the two inputs above)
+The bug, as the before-and-after code change required to fix it:
+Before:
+```
+static int[] reversed(int[] arr) {
+    int[] newArray = new int[arr.length];
+    for(int i = 0; i < arr.length; i += 1) {
+        arr[i] = newArray[arr.length - i - 1]; // Bug here, incorrect assignment
+    }
+    return arr;
+}
+```
+
+After:
+```
+static int[] reversed(int[] arr) {
+    int[] newArray = new int[arr.length];
+    for(int i = 0; i < arr.length; i += 1) {
+        newArray[i] = arr[arr.length - i - 1]; // Fixed the assignment
+    }
+    return newArray;
+}
+```
+Why does the fix addresses the issue?
+The bug was in the assignment of values in the reversed method. The fix swaps the assignment statements, correctly copying elements from the input array arr into the newArray in reverse order.
+
+
